@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { LIGHT_GROUP_NAME, DESK_DEPTH, DESK_HEIGHT } from './constants.js';
 import { createDesk } from './desk.js';
-import { applyImmersiveLights } from './lighting.js';
-import { setupUI } from './ui.js';
+import { generateLightsFromIDs } from './lighting.js';
+import { createSchemeButtons } from './ui.js';
+import { LIGHTING_SCHEMES } from './lighting-schemes.js';
 
 // --- GLOBAL VARIABLES ---
 let scene, camera, renderer, controls, wall;
@@ -45,11 +46,11 @@ function init() {
     controls.target.set(0, DESK_HEIGHT * 0.6, 0);
 
     // 4. UI & Event Listeners
-    setupUI(scene);
+    createSchemeButtons(scene, generateLightsFromIDs, 'immersive');
     window.addEventListener('resize', onWindowResize);
 
     // 5. Initial state
-    applyImmersiveLights(scene); 
+    generateLightsFromIDs(scene, LIGHTING_SCHEMES.immersive.ids); 
     animate();
 }
 
@@ -101,4 +102,4 @@ function onWindowResize() {
 }
 
 // --- INITIALIZATION ---
-init(); 
+init();
