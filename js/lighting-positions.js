@@ -60,72 +60,54 @@ export const LIGHTING_POSITIONS = {
         id: 3,
         description: '主桌面，後緣下方 (Main Desk, Back Edge, Underside)',
         size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, -DESK_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
+        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, -DESK_DEPTH + 0.05),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
     4: {
         id: 4,
-        description: '主桌面，前緣下方 (Main Desk, Front Edge, Underside)',
+        description: '主桌面，前凹槽樑 (Main Desk, Front Cutout Beam)',
         size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, DESK_DEPTH / 2 - 0.02 + Z_OFFSET),
+        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, -0.15),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
 
     // --- Vertical Positions (Symmetrical Pairs) ---
 
-    // Back Frame
+    // Frame Pillars (Now moved to the front)
     5: {
         id: 5,
-        description: '後方垂直支架，左側 (Back Vertical Frame, Left)',
+        description: '前方垂直支架，左側 (Front Vertical Frame, Left)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
+        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH / 2, SIDE_PANEL_Y, -0.37 + Z_OFFSET),
+        rotation: new THREE.Euler(0, Math.PI / 2, Math.PI / 2),
         isVertical: true,
     },
     6: {
         id: 6,
-        description: '後方垂直支架，右側 (Back Vertical Frame, Right)',
+        description: '前方垂直支架，右側 (Front Vertical Frame, Right)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
+        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH / 2, SIDE_PANEL_Y, -0.37 + Z_OFFSET),
+        rotation: new THREE.Euler(0, -Math.PI / 2, Math.PI / 2),
         isVertical: true,
     },
 
-    // Front Frame
+    // --- IKEA Classic & Monitor Shelf Specific Positions ---
     7: {
         id: 7,
-        description: '前方垂直支架，左側 (Front Vertical Frame, Left)',
-        size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02 + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
-        isVertical: true,
+        description: 'IKEA 特調：螢幕層板，後方 (朝牆)',
+        size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
+        position: new THREE.Vector3(0, 0.87, -DESK_DEPTH),
+        rotation: new THREE.Euler(Math.PI / 2, 0, 0),
+        isVertical: false,
     },
     8: {
         id: 8,
-        description: '前方垂直支架，右側 (Front Vertical Frame, Right)',
-        size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02 + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
-        isVertical: true,
-    },
-    
-    // Upper Frame
-    9: {
-        id: 9,
-        description: '上方垂直支架，左側 (Upper Vertical Frame, Left)',
-        size: { width: UPPER_LEG_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
-        isVertical: true,
-    },
-    10: {
-        id: 10,
-        description: '上方垂直支架，右側 (Upper Vertical Frame, Right)',
-        size: { width: UPPER_LEG_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
-        rotation: new THREE.Euler(0, 0, Math.PI / 2),
-        isVertical: true,
+        description: 'IKEA 特調：頂部層板，後方 (朝牆)',
+        size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
+        position: new THREE.Vector3(0, TOP_SHELF_Y, -DESK_DEPTH),
+        rotation: new THREE.Euler(Math.PI / 2, 0, 0),
+        isVertical: false,
     },
 };

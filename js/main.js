@@ -46,11 +46,11 @@ function init() {
     controls.target.set(0, DESK_HEIGHT * 0.6, 0);
 
     // 4. UI & Event Listeners
-    createSchemeButtons(scene, generateLightsFromIDs, 'immersive');
+    createSchemeButtons(scene, generateLightsFromIDs, 'ikeaClassic');
     window.addEventListener('resize', onWindowResize);
 
     // 5. Initial state
-    generateLightsFromIDs(scene, LIGHTING_SCHEMES.immersive.ids); 
+    generateLightsFromIDs(scene, LIGHTING_SCHEMES.ikeaClassic.ids); 
     animate();
 }
 
