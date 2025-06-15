@@ -38,10 +38,12 @@ export function generateLightsFromIDs(scene, ids) {
         light.position.copy(spec.position);
         light.rotation.copy(spec.rotation);
         
-        // For vertical lights, we need an additional rotation to make them shine "outwards"
-        // The rotation in the spec orients the geometry, this orients the light itself.
+        // For vertical lights, the RectAreaLight needs a rotation to shine "outwards".
+        // The direction depends on whether it's the left or right light.
         if (spec.isVertical) {
-            light.rotateX(Math.PI / 2);
+            // If x is negative, it's the left light, otherwise it's the right.
+            const rotationAngle = spec.position.x < 0 ? -Math.PI / 2 : Math.PI / 2;
+            light.rotateX(rotationAngle);
         }
 
         const lightRep = new THREE.Mesh(
