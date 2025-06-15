@@ -11,7 +11,8 @@ import {
     SIDE_PANEL_HEIGHT,
     SIDE_PANEL_Y,
     UPPER_LEG_HEIGHT,
-    UPPER_LEG_Y
+    UPPER_LEG_Y,
+    FRAME_THICKNESS
 } from './constants.js';
 
 /**
@@ -28,6 +29,9 @@ import {
  */
 
 const LIGHT_THICKNESS = 0.01;
+const Z_OFFSET = -0.37; // = -DESK_DEPTH / 2
+const VISIBILITY_OFFSET_Z = FRAME_THICKNESS; // A small offset to prevent Z-fighting on Z-axis
+const VISIBILITY_OFFSET_X = 0.03; // A small offset for X-axis
 
 /** @type {Object.<number, LightPosition>} */
 export const LIGHTING_POSITIONS = {
@@ -38,7 +42,7 @@ export const LIGHTING_POSITIONS = {
         id: 1,
         description: '上層架，後緣 (Top Shelf, Back Edge)',
         size: { width: DESK_WIDTH * 0.9, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, TOP_SHELF_Y, -TOP_SHELF_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(0, TOP_SHELF_Y, -TOP_SHELF_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
@@ -46,7 +50,7 @@ export const LIGHTING_POSITIONS = {
         id: 2,
         description: '上層架，前緣下方 (Top Shelf, Front Edge, Underside)',
         size: { width: DESK_WIDTH * 0.9, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, TOP_SHELF_Y - 0.02, TOP_SHELF_DEPTH / 2 - 0.02),
+        position: new THREE.Vector3(0, TOP_SHELF_Y - 0.02, TOP_SHELF_DEPTH / 2 - 0.02 + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
@@ -56,7 +60,7 @@ export const LIGHTING_POSITIONS = {
         id: 3,
         description: '主桌面，後緣下方 (Main Desk, Back Edge, Underside)',
         size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, -DESK_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, -DESK_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
@@ -64,7 +68,7 @@ export const LIGHTING_POSITIONS = {
         id: 4,
         description: '主桌面，前緣下方 (Main Desk, Front Edge, Underside)',
         size: { width: DESK_WIDTH, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, DESK_DEPTH / 2 - 0.02),
+        position: new THREE.Vector3(0, MAIN_DESK_Y - 0.02, DESK_DEPTH / 2 - 0.02 + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, 0),
         isVertical: false,
     },
@@ -76,7 +80,7 @@ export const LIGHTING_POSITIONS = {
         id: 5,
         description: '後方垂直支架，左側 (Back Vertical Frame, Left)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH / 2, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
@@ -84,7 +88,7 @@ export const LIGHTING_POSITIONS = {
         id: 6,
         description: '後方垂直支架，右側 (Back Vertical Frame, Right)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH / 2, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, SIDE_PANEL_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
@@ -94,7 +98,7 @@ export const LIGHTING_POSITIONS = {
         id: 7,
         description: '前方垂直支架，左側 (Front Vertical Frame, Left)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH / 2, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02),
+        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02 + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
@@ -102,7 +106,7 @@ export const LIGHTING_POSITIONS = {
         id: 8,
         description: '前方垂直支架，右側 (Front Vertical Frame, Right)',
         size: { width: SIDE_PANEL_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH / 2, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02),
+        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, SIDE_PANEL_Y, SIDE_PANEL_DEPTH / 2 - 0.02 + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
@@ -112,7 +116,7 @@ export const LIGHTING_POSITIONS = {
         id: 9,
         description: '上方垂直支架，左側 (Upper Vertical Frame, Left)',
         size: { width: UPPER_LEG_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH / 2, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(-DESK_WIDTH / 2 + LEG_WIDTH + VISIBILITY_OFFSET_X, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
@@ -120,7 +124,7 @@ export const LIGHTING_POSITIONS = {
         id: 10,
         description: '上方垂直支架，右側 (Upper Vertical Frame, Right)',
         size: { width: UPPER_LEG_HEIGHT, height: LIGHT_THICKNESS, depth: LIGHT_THICKNESS },
-        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH / 2, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + 0.02),
+        position: new THREE.Vector3(DESK_WIDTH / 2 - LEG_WIDTH - VISIBILITY_OFFSET_X, UPPER_LEG_Y, -SIDE_PANEL_DEPTH / 2 + VISIBILITY_OFFSET_Z + Z_OFFSET),
         rotation: new THREE.Euler(0, 0, Math.PI / 2),
         isVertical: true,
     },
