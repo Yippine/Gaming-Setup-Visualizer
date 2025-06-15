@@ -40,6 +40,14 @@ function init() {
     wall.position.set(0, 2.5, -DESK_DEPTH - 0.05);
     scene.add(wall);
 
+    const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(20, 20),
+        new THREE.MeshStandardMaterial({ color: 0xeaeaea, side: THREE.DoubleSide })
+    );
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = 0;
+    scene.add(ground);
+
     // 3. Controls
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
