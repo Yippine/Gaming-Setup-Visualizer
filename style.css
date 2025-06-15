@@ -33,3 +33,29 @@ p {
     font-size: 0.9em;
     margin: 0;
 }
+
+#light-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+}
+
+.light-btn {
+    padding: 10px 15px;
+    font-size: 1em;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.light-btn:hover, .light-btn.active {
+    background-color: rgba(0, 170, 255, 0.7);
+    border-color: #00aaff;
+}
