@@ -1,0 +1,25 @@
+[
+  {
+    "id": "30361953",
+    "name": "FREDDE",
+    "brand": "IKEA",
+    "category": "gaming_desk",
+    "description": "電腦桌, 黑色",
+    "url": "https://www.ikea.com.tw/zh/products/gaming-collection/gaming/fredde-art-30361953",
+    "attributes": {
+      "color": "black"
+    }
+  },
+  {
+    "id": "10530607",
+    "name": "VATTENSTEN",
+    "brand": "IKEA",
+    "category": "led_light_strip",
+    "description": "LED燈條, 多色",
+    "url": "https://www.ikea.com.tw/zh/products/integrated-lighting/integrated-lighting/vattensten-art-10530607",
+    "quantity": 4,
+    "attributes": {
+      "color": "multicolor"
+    }
+  }
+]
