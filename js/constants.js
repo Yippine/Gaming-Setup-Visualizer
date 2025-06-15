@@ -2,6 +2,7 @@ export const DESK_WIDTH = 1.4;
 export const DESK_HEIGHT = 1.46;
 export const DESK_DEPTH = 0.74;
 export const FRAME_THICKNESS = 0.05;
+export const FRAME_THICKNESS_2 = 0.03; // A thinner frame for secondary supports
 export const BOARD_THICKNESS = 0.03;
 
 // Dimensions for positioning, derived from the desk model
