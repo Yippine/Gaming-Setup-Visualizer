@@ -34,14 +34,35 @@ p {
     margin: 0;
 }
 
-#light-controls {
+#controls-container {
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     z-index: 10;
+}
+
+#light-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#individual-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-section-title {
+    font-size: 0.9em;
+    color: #ccc;
+    text-align: center;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 5px;
 }
 
 .light-btn {
@@ -58,4 +79,47 @@ p {
 .light-btn:hover, .light-btn.active {
     background-color: rgba(0, 170, 255, 0.7);
     border-color: #00aaff;
+}
+
+.light-switch {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    position: relative;
+}
+
+.light-switch:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.light-switch.on {
+    background-color: rgba(0, 170, 255, 0.6);
+    border-color: #00aaff;
+    color: #fff;
+}
+
+.light-switch.on::after {
+    content: "●";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00ff00;
+    font-size: 1.2em;
+}
+
+.light-switch.off::after {
+    content: "○";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 1.2em;
 }

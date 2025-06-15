@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { LIGHT_GROUP_NAME, DESK_DEPTH, DESK_HEIGHT } from './constants.js';
 import { createDesk } from './desk.js';
-import { generateLightsFromIDs } from './lighting.js';
+import { generateLightsFromIDs, getLightState } from './lighting.js';
 import { createSchemeButtons } from './ui.js';
 import { LIGHTING_SCHEMES } from './lighting-schemes.js';
 
@@ -27,7 +27,7 @@ function init() {
     renderer.setPixelRatio(window.devicePixelRatio);
     
     // 2. Base Scene Elements
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
     const desk = createDesk();
@@ -53,12 +53,14 @@ function init() {
     controls.enableDamping = true;
     controls.target.set(0, DESK_HEIGHT * 0.6, 0);
 
-    // 4. UI & Event Listeners
-    createSchemeButtons(scene, generateLightsFromIDs, 'ikeaClassic');
+    // 4. Initial lighting state
+    generateLightsFromIDs(scene, LIGHTING_SCHEMES.immersiveCommandDeck.ids); 
+
+    // 5. UI & Event Listeners (after lights are created)
+    createSchemeButtons(scene, generateLightsFromIDs, 'immersiveCommandDeck');
     window.addEventListener('resize', onWindowResize);
 
-    // 5. Initial state
-    generateLightsFromIDs(scene, LIGHTING_SCHEMES.ikeaClassic.ids); 
+    // 6. Start animation
     animate();
 }
 
@@ -70,7 +72,6 @@ function animate() {
     if (wall && camera) {
         const isBehindWall = camera.position.z < wall.position.z;
         
-        // New: Make the wall translucent when behind it, instead of invisible
         if (isBehindWall) {
             wall.material.opacity = 0.15;
             wall.material.transparent = true;
@@ -81,20 +82,67 @@ function animate() {
         
         const lightGroup = scene.getObjectByName(LIGHT_GROUP_NAME);
         if (lightGroup) {
-            lightGroup.children.forEach((child, index) => {
-                const pairIndex = Math.floor(index / 2);
-                const hue = (elapsedTime * 0.1 + pairIndex * 0.2) % 1;
-                
-                if (child.isRectAreaLight) {
-                    child.visible = true; 
-                    child.color.setHSL(hue, 1, 0.5);
+            
+            // --- Final, Corrected Color Logic ---
+
+            // 1. Identify visible lights and sort them into two categories.
+            const individualVisibleIds = [];
+            let isUnderglowVisible = false;
+            
+            lightGroup.children.forEach(child => {
+                const lightId = child.userData.lightId;
+                if (lightId && getLightState(lightId) && child.isRectAreaLight) {
+                    if (child.userData.groupId === 'underglow') {
+                        isUnderglowVisible = true;
+                    } else {
+                        if (!individualVisibleIds.includes(lightId)) {
+                            individualVisibleIds.push(lightId);
+                        }
+                    }
                 }
-                
-                if (child.userData.isLightRepresentation) {
-                    child.material.color.setHSL(hue, 1, 0.5);
-                    // The physical light strip models should always be visible,
-                    // as they are now correctly positioned and will not clip.
-                    child.visible = true;
+            });
+
+            // 2. Determine the total number of distinct color "slots" needed.
+            const totalColorSlots = individualVisibleIds.length + (isUnderglowVisible ? 1 : 0);
+            
+            // 3. Create a map for individual strips to their color index.
+            const colorIndexMap = new Map(individualVisibleIds.map((id, index) => [id, index]));
+            
+            // 4. Assign a unique color index to the underglow group. It gets the last index.
+            const underglowColorIndex = individualVisibleIds.length;
+
+            // 5. Calculate the final hue for the underglow group, ensuring it's part of the even distribution.
+            const underglowHue = totalColorSlots > 0 ? (elapsedTime * 0.1 + underglowColorIndex / totalColorSlots) % 1 : 0;
+
+            // 6. Apply visibility and colors to all lights.
+            lightGroup.children.forEach((child) => {
+                const lightId = child.userData.lightId;
+                if (lightId === undefined) return;
+
+                const isVisible = getLightState(lightId);
+                child.visible = isVisible;
+
+                if (isVisible && !child.isSpotLight) {
+                    let hue;
+                    
+                    if (child.userData.groupId === 'underglow') {
+                        // All underglow lights share a single, pre-calculated hue.
+                        hue = underglowHue;
+                    } else if (colorIndexMap.has(lightId)) {
+                        // Individual strips get their unique, evenly spaced color.
+                        const colorIndex = colorIndexMap.get(lightId);
+                        hue = totalColorSlots > 0 ? (elapsedTime * 0.1 + colorIndex / totalColorSlots) % 1 : 0;
+                    } else {
+                        // Fallback for safety.
+                        hue = 0; 
+                    }
+
+                    // Apply the calculated color to the 3D object.
+                    if (child.isRectAreaLight) {
+                        child.color.setHSL(hue, 1, 0.5);
+                    } else if (child.userData.isLightRepresentation) {
+                        child.material.color.setHSL(hue, 1, 0.5);
+                    }
                 }
             });
         }
